@@ -4,6 +4,9 @@ module Bugspots
   Fix = Struct.new(:message, :date, :files)
   Spot = Struct.new(:file, :score)
 
+  # Filter all results before this threshold
+  ScoreThreshold = 0.01
+
   def self.scan(repo, branch = "master", fileExt = ".php", depth = 500, regex = nil)
 
     regex ||= /\b(fix(es|ed)?|close(s|d)?)\b/i
@@ -30,8 +33,7 @@ module Bugspots
     fixes.each do |fix|
       fix.files.each do |file|
         
-        if
-          File.extname(file).eql? fileExt
+        if File.extname(file).eql? fileExt
         
           # The timestamp used in the equation is normalized from 0 to 1, where
           # 0 is the earliest point in the code base, and 1 is now (where now is
@@ -42,6 +44,13 @@ module Bugspots
           t = 1 - ((Time.now - fix.date).to_f / (Time.now - fixes.first.date))
           hotspots[file] += 1/(1+Math.exp((-12*t)+12))
         end
+      end
+    end
+
+    # filter out the files with very low scores
+    hotspots.each do |file, score|
+      if score <= ScoreThreshold
+        hotspots.delete(file)
       end
     end
 

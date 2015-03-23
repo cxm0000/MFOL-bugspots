@@ -18,6 +18,11 @@ OptionParser.new do |opts|
   opts.on('-b', '--branch [name]', 'branch to crawl') do |b|
     options[:branch] = b.to_s
   end
+  
+  # Option: Set Bugfix Indicator
+  opts.on('-f', '--file [file extension]', 'The type of file to scan') do |f|
+    options[:fileExt] = f.to_s
+  end
 
   # Option: Set Depth
   opts.on('-d', '--depth [depth]', 'depth of log crawl (integer)') do |d|
@@ -46,10 +51,13 @@ options[:depth] ||= 500
 # Set master as the default branch
 options[:branch] ||= "master"
 
-puts "Scanning #{ARGV[0]} repo".foreground(:green)
+# Set the default file extionsion to include to be php
+options[:fileExt] ||= ".php"
+
+puts "Scanning #{ARGV[0]} repo with #{options[:fileExt]} files".foreground(:green)
 
 begin
-  fixes, spots = Bugspots.scan(ARGV[0], options[:branch], options[:depth], options[:regex])
+  fixes, spots = Bugspots.scan(ARGV[0], options[:branch], options[:fileExt], options[:depth], options[:regex])
 
   puts "\tFound #{fixes.size} bugfix commits, with #{spots.size} hotspots:".foreground(:yellow)
   puts

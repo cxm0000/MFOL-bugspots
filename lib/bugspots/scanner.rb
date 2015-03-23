@@ -4,7 +4,8 @@ module Bugspots
   Fix = Struct.new(:message, :date, :files)
   Spot = Struct.new(:file, :score)
 
-  def self.scan(repo, branch = "master", depth = 500, regex = nil)
+  def self.scan(repo, branch = "master", fileExt = ".php", depth = 500, regex = nil)
+
     regex ||= /\b(fix(es|ed)?|close(s|d)?)\b/i
     fixes = []
 
@@ -28,14 +29,19 @@ module Bugspots
     hotspots = Hash.new(0)
     fixes.each do |fix|
       fix.files.each do |file|
-        # The timestamp used in the equation is normalized from 0 to 1, where
-        # 0 is the earliest point in the code base, and 1 is now (where now is
-        # when the algorithm was run). Note that the score changes over time
-        # with this algorithm due to the moving normalization; it's not meant
-        # to provide some objective score, only provide a means of comparison
-        # between one file and another at any one point in time
-        t = 1 - ((Time.now - fix.date).to_f / (Time.now - fixes.first.date))
-        hotspots[file] += 1/(1+Math.exp((-12*t)+12))
+        
+        if
+          File.extname(file).eql? fileExt
+        
+          # The timestamp used in the equation is normalized from 0 to 1, where
+          # 0 is the earliest point in the code base, and 1 is now (where now is
+          # when the algorithm was run). Note that the score changes over time
+          # with this algorithm due to the moving normalization; it's not meant
+          # to provide some objective score, only provide a means of comparison
+          # between one file and another at any one point in time
+          t = 1 - ((Time.now - fix.date).to_f / (Time.now - fixes.first.date))
+          hotspots[file] += 1/(1+Math.exp((-12*t)+12))
+        end
       end
     end
 

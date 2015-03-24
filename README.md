@@ -9,8 +9,8 @@ Point bugspots at any git repo and it will identify the hotspots for you.
 ## Usage
 
 ```bash
-$> gem install bugspots
-$> bugspots /path/to/repo
+$> gem install MFOL-bugspots
+$> bugspots /path/to/repo -b develop -f ".php"
 $> git bugspots (in root of current git project, --help for options)
 ```
 
@@ -83,6 +83,8 @@ $> git bugspots -d 500
 		0.0 - ext/fastfilereader/mapper.cpp
 		0.0 - lib/protocols/httpclient.rb
 ```
+
+The files with very very low scores are ignored in the result list.
 
 ### License
 

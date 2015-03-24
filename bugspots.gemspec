@@ -3,11 +3,12 @@ $:.push File.expand_path("../lib", __FILE__)
 require "bugspots/version"
 
 Gem::Specification.new do |s|
+  s.license     = "MIT"
   s.name        = "MFOL-bugspots"
   s.version     = Bugspots::VERSION
   s.authors     = ["Xiaoming Cai"]
   s.email       = ["ming.cxm@gmail.com"]
-  s.homepage    = "https://github.com/cxm0000/bugspots"
+  s.homepage    = "https://github.com/cxm0000/MFOL-bugspots"
   s.summary     = "Implementation of simple bug prediction hotspot heuristic"
   s.description = s.summary
 

@@ -14,6 +14,11 @@ $> bugspots /path/to/repo -b develop -f ".php"
 $> git bugspots (in root of current git project, --help for options)
 ```
 
+* With the "-f" tag you could specify one file extension to go through, the default value is ".php"
+* The files with very very low scores are ignored in the result list.
+
+
+
 ## Results
 
 ```bash
@@ -84,8 +89,6 @@ $> git bugspots -d 500
 		0.0 - lib/protocols/httpclient.rb
 ```
 
-The files with very very low scores are ignored in the result list.
-
 ### License
 
-(MIT License) - Copyright (c) 2011 Ilya Grigorik
+(MIT License) - Copyright (c) 2015 Xiaoming Cai

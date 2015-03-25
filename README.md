@@ -91,4 +91,4 @@ $> git bugspots -d 500
 
 ### License
 
-(MIT License) - Copyright (c) 2015 Xiaoming Cai
+(MIT License) - Copyleft (c) 2015 Xiaoming Cai

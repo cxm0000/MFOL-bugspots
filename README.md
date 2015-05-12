@@ -20,9 +20,9 @@ $> git bugspots (in root of current git project, --help for options)
 
 An example of the command could be:
 
-{code}
+```bash
 bugspots /PATH/TO/REPO -b develop -f .php -r "/^bug( |-)/i"
-{code}
+```
 
 This means to find all comments starting with bug(case insensitive) from the REPO
 in the "develop" branch and then caculate on only php files.
